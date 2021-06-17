@@ -83,7 +83,7 @@ jobs:
           # List of SSH agent socket or keys to expose to the build
           #ssh: # optional
           # List of tags
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/manuitemapp:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/menuitemapp:latest
           # Sets the target stage to build
           #target: # optional
           # GitHub Token used to authenticate against a repository for Git context
