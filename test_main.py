@@ -95,6 +95,21 @@ def test_read_menu_item_nonexistant_id():
     assert response.status_code == status.HTTP_404_NOT_FOUND
 
 
+def test_update_menu_item():
+    test_menuItemIn = {"naam": "bier", "omschrijving": "Dit is een biertje.", "prijs": 2.5, "allergenen": [
+        "gluten", "alkohol"], "urlPlaatje": "https://fr.m.wikipedia.org/wiki/Fichier:Pilsner_Bier.jpg"}
+    response = client.post("/menuitem", json=test_menuItemIn)
+    menuItem_id = response.json()["id"]
+    test_menuItemIn = {"naam": "wijn", "omschrijving": "Dit is een wijntje.", "prijs": 3.0, "allergenen": [
+    ], "urlPlaatje": "https://nl.wikipedia.org/wiki/Wijn#/media/Bestand:Red_Wine_Glass.jpg"}
+    response = client.put("/menuitem/" + menuItem_id, json=test_menuItemIn)
+    assert response.status_code == status.HTTP_200_OK
+    assert response.json()["id"] == menuItem_id
+    assert response.json()["naam"] == test_menuItemIn["naam"]
+    assert response.json()["omschrijving"] == test_menuItemIn["omschrijving"]
+    assert response.json()["prijs"] == test_menuItemIn["prijs"]
+    assert response.json()["allergenen"] == test_menuItemIn["allergenen"]
+    assert response.json()["urlPlaatje"] == test_menuItemIn["urlPlaatje"]
 
 
 def test_update_menu_item_bad_id():
@@ -109,7 +124,19 @@ def test_update_menu_item_nonexistant_id():
     assert response.status_code == status.HTTP_404_NOT_FOUND
 
 
-
+def test_delete_menu_item():
+    test_menuItemIn = {"naam": "bier", "omschrijving": "Dit is een biertje.", "prijs": 2.5, "allergenen": [
+        "gluten", "alkohol"], "urlPlaatje": "https://fr.m.wikipedia.org/wiki/Fichier:Pilsner_Bier.jpg"}
+    response = client.post("/menuitem", json=test_menuItemIn)
+    menuItem_id = response.json()["id"]
+    response = client.delete("/menuitem/" + menuItem_id)
+    assert response.status_code == status.HTTP_200_OK
+    assert response.json()["id"] == menuItem_id
+    assert response.json()["naam"] == test_menuItemIn["naam"]
+    assert response.json()["omschrijving"] == test_menuItemIn["omschrijving"]
+    assert response.json()["prijs"] == test_menuItemIn["prijs"]
+    assert response.json()["allergenen"] == test_menuItemIn["allergenen"]
+    assert response.json()["urlPlaatje"] == test_menuItemIn["urlPlaatje"]
 
 
 def test_delete_menu_item_bad_id():
