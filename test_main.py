@@ -93,3 +93,30 @@ def test_read_menu_item_bad_id():
 def test_read_menu_item_nonexistant_id():
     response = client.get("/menuitem/" + str(uuid4()))
     assert response.status_code == status.HTTP_404_NOT_FOUND
+
+
+
+
+def test_update_menu_item_bad_id():
+    response = client.put("/menuitem/" + "string")
+    assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
+
+
+def test_update_menu_item_nonexistant_id():
+    test_menuItemIn = {"naam": "bier", "omschrijving": "Dit is een biertje.", "prijs": 2.5, "allergenen": [
+        "gluten", "alkohol"], "urlPlaatje": "https://fr.m.wikipedia.org/wiki/Fichier:Pilsner_Bier.jpg"}
+    response = client.put("/menuitem/" + str(uuid4()), json=test_menuItemIn)
+    assert response.status_code == status.HTTP_404_NOT_FOUND
+
+
+
+
+
+def test_delete_menu_item_bad_id():
+    response = client.delete("/menuitem/" + "string")
+    assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
+
+
+def test_delete_menu_item_nonexistant_id():
+    response = client.delete("/menuitem/" + str(uuid4()))
+    assert response.status_code == status.HTTP_404_NOT_FOUND
