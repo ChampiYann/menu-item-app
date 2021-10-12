@@ -30,6 +30,10 @@ menuItem2 = MenuItemOut(id=uuid4(), naam="bitterballen", prijs=5.0)
 
 example_source = [menuItem1, menuItem2]
 
+@app.get("/")
+@app.get("/health")
+def read_health():
+    return {"status": "healthy"}
 
 @app.get("/menuitems", response_model=List[MenuItemOut])
 def read_menu_items():
