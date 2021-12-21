@@ -32,6 +32,7 @@ example_source = [menuItem1, menuItem2]
 
 @app.get("/")
 @app.get("/health")
+@app.get("/alive")
 def read_health():
     return {"status": "healthy"}
 
